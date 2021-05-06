@@ -1,23 +1,20 @@
-import Tool from "./Tool.js"
-class Brush extends Tool {
-    constructor(canvas, renderingContext, img, isDrawing, lastPoint, x, y) {
+import Tool from "./Tool.js";
+import {distanceBetween, angleBetween} from "../Utils.js";
+export default class Brush extends Tool {
+    constructor(canvas, renderingContext, img) {
         super(canvas, renderingContext);
         this.img = img;
-        this.isDrawing = isDrawing;
-        this.lastPoint = lastPoint;
-        this.x = x;
-        this.y = y;
     }
 
     mouseDown() {
-        this.canvas.onmousedown = function (e) {
+        this.canvas.onmousedown = e => {
             this.isDrawing = true;
             this.lastPoint = {x: e.clientX, y: e.clientY};
         };
     }
 
     mouseMove() {
-        this.canvas.onmousemove = function (e) {
+        this.canvas.onmousemove = e => {
             if (!this.isDrawing) return;
 
             let currentPoint = {x: e.clientX, y: e.clientY};
@@ -27,6 +24,7 @@ class Brush extends Tool {
             for (let i = 0; i < dist; i++) {
                 this.x = this.lastPoint.x + (Math.sin(angle) * i) - 25;
                 this.y = this.lastPoint.y + (Math.cos(angle) * i) - 25;
+                console.log(typeof this.img)
                 this.renderingContext.drawImage(this.img, this.x, this.y);
             }
             this.lastPoint = currentPoint;
@@ -34,7 +32,7 @@ class Brush extends Tool {
     }
 
     mouseUp() {
-        this.canvas.onmouseup = function () {
+        this.canvas.onmouseup = () => {
             this.isDrawing = false;
         };
     }

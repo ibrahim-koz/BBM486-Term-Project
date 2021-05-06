@@ -1,45 +1,45 @@
 import Tool from "./Tool.js"
-class Spray extends Tool {
-    constructor(canvas, renderingContext, mode, clientX, clientY, timeout, density) {
-        super(canvas, renderingContext, mouseDown, mouseMove, mouseUp);
+import {getRandomFloat} from "../Utils.js";
+
+export default class Spray extends Tool {
+    constructor(canvas, renderingContext, mode, density) {
+        super(canvas, renderingContext);
         this.renderingContext.lineJoin = this.renderingContext.lineCap = mode;
-        this.clientX = clientX;
-        this.clientY = clientY;
-        this.timeout = timeout;
         this.density = density;
     }
 
     mouseDown() {
-        this.canvas.onmousedown = function (e) {
-            clientX = e.clientX;
-            clientY = e.clientY;
+        this.canvas.onmousedown = e => {
+            this.clientX = e.clientX;
+            this.clientY = e.clientY;
 
-            this.timeout = setTimeout(function draw() {
-                for (let i = this.density; i--;) {
+            let ref = this;
+            ref.timeout = setTimeout(function draw() {
+                for (let i = ref.density; i--;) {
                     let angle = getRandomFloat(0, Math.PI * 2);
                     let radius = getRandomFloat(0, 30);
-                    this.renderingContext.globalAlpha = Math.random();
-                    this.renderingContext.fillRect(
-                        clientX + radius * Math.cos(angle),
-                        clientY + radius * Math.sin(angle),
+                    ref.renderingContext.globalAlpha = Math.random();
+                    ref.renderingContext.fillRect(
+                        ref.clientX + radius * Math.cos(angle),
+                        ref.clientY + radius * Math.sin(angle),
                         getRandomFloat(1, 2), getRandomFloat(1, 2));
                 }
-                if (!this.timeout) return;
-                this.timeout = setTimeout(draw, 50);
-            }.bind(this), 50);
+                if (!ref.timeout) return;
+                ref.timeout = setTimeout(draw, 50);
+            }, 50);
         };
     }
 
 
     mouseMove() {
-        this.canvas.onmousemove = function (e) {
+        this.canvas.onmousemove = e => {
             this.clientX = e.clientX;
             this.clientY = e.clientY;
         };
     }
 
     mouseUp() {
-        this.canvas.onmouseup = function () {
+        this.canvas.onmouseup = () => {
             clearTimeout(this.timeout);
         };
     }

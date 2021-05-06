@@ -1,13 +1,12 @@
 import Tool from "./Tool.js"
-class SimplePen extends Tool {
-    constructor(canvas, renderingContext, isDrawing, points) {
+export default class SimplePen extends Tool {
+    constructor(canvas, renderingContext) {
         super(canvas, renderingContext);
-        this.isDrawing = isDrawing;
-        this.points = points;
+        this.points = [];
     }
 
     mouseDown() {
-        this.canvas.onmousedown = function (e) {
+        this.canvas.onmousedown = e => {
             this.isDrawing = true;
             this.points.push({x: e.clientX, y: e.clientY});
         };
@@ -15,7 +14,7 @@ class SimplePen extends Tool {
 
 
     mouseMove() {
-        this.canvas.onmousemove = function (e) {
+        this.canvas.onmousemove = e => {
             if (!this.isDrawing) return;
 
             this.renderingContext.clearRect(0, 0, this.renderingContext.canvas.width, this.renderingContext.canvas.height);
@@ -32,7 +31,7 @@ class SimplePen extends Tool {
 
 
     mouseUp() {
-        this.canvas.onmouseup = function () {
+        this.canvas.onmouseup = () => {
             this.isDrawing = false;
             this.points.length = 0;
         };
