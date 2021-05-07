@@ -1,10 +1,10 @@
-class Canvas {
+export default class Canvas {
     constructor(canvasElement, renderingContext, tool) {
         this.canvasElement = canvasElement;
         this.renderingContext = renderingContext;
         this.setUpCanvas();
         this.setUpEventListeners();
-        this.currentTool = tool;
+        this.setCurrentTool(tool);
     }
 
     setUpCanvas() {
@@ -23,23 +23,20 @@ class Canvas {
         })
     }
 
-    changeCurrentTool(tool){
+    setCurrentTool(tool){
         this.currentTool = tool;
+        this.currentTool.pick();
     }
 
-    draw(){
-        this.currentTool.draw();
+    setColor(color){
+        this.renderingContext.strokeStyle = color;
     }
 
-    changeColor(){
-        this.currentTool.changeColor();
+    setSize(thickness){
+        this.renderingContext.lineWidth = thickness;
     }
 
-    increaseSize(){
-        this.currentTool.increaseSize();
-    }
-
-    decreaseSize(){
-        this.currentTool.decreaseSize();
+    clearCanvas(){
+        this.renderingContext.clearRect(0, 0, this.renderingContext.canvas.width, this.renderingContext.canvas.height);
     }
 }

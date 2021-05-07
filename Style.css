@@ -6,3 +6,12 @@ canvas#c {
     top: 0;
     z-index: -1;
 }
+
+#gui-container {
+    position: absolute;
+    left: 40px;   /* position inside relatively positioned parent */
+    top: 20px;
+    z-index: 0;
+    transform:scale(1.25);
+    margin-right: 0;
+}

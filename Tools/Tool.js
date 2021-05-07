@@ -22,10 +22,21 @@ export default class Tool {
     }
 
 
+    changeColor(){
+
+    }
+
+    increaseSize(){
+
+    }
+
+    decreaseSize(){
+
+    }
+
     resetEventHandlers() {
         this.canvas.onmousedown = null;
         this.canvas.onmousemove = null;
         this.canvas.onmouseup = null;
     }
-
 }
