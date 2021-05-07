@@ -15,3 +15,11 @@ canvas#c {
     transform:scale(1.25);
     margin-right: 0;
 }
+
+.function .button:before{
+    content: "Clear Canvas";
+}
+
+.function .c{
+    margin: auto
+}

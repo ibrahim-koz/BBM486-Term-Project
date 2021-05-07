@@ -68,3 +68,7 @@ gui.addColor(menu, 'color').name('Color').onChange(color => {
 gui.add(menu, 'size', 0, 100).name('Size').onChange(thickness => {
     canvas.setSize(thickness)
 })
+
+let obj = { "Clear Canvas": function(){ canvas.clearCanvas() }};
+
+gui.add(obj,"Clear Canvas").name("");
